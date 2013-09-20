@@ -85,6 +85,7 @@ include CORE.'cli.php';";
 		// Get current db version
 		$currentLocalDbVersion=trim(UFile::getContents($projectBasePath.'currentDbVersion'));
 		$currentServerDbVersion=trim(UExec::exec('cd / && cat '.escapeshellarg($target.'currentDbVersion'),$sshOptions));
+		if(stripos($currentServerDbVersion,'denied')!==false) return $resp->push('DENIED : '.$currentServerDbVersion);
 		$resp->push('DB Versions : server='.$currentServerDbVersion.', local='.$currentLocalDbVersion);
 		$stopProject=$currentServerDbVersion != $currentLocalDbVersion || (isset($_REQUEST['projectStop']) && $_REQUEST['projectStop']=='1')
 							|| $projectStopBeforeDbEvolution;
