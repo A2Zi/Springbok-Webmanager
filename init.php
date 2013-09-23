@@ -23,10 +23,6 @@ file_put_contents($webmanagerDir.'config/secure.php','<?php return array();');
 file_put_contents($webmanagerDir.'config/cookies.php','<?php return null;');
 file_put_contents($webmanagerDir.'config/enhance.php',"<?php return array(
 	'base'=>array('i18n'),
-	'includes'=>array(
-		'img'=>array('filetree','jquery-ui'),
-		'js'=>array('ace')
-	)
 );");
 file_put_contents($webmanagerDir.'config/_.php',"<?php return array(
 	'project_name'=>'webmanager',
