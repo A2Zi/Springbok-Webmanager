@@ -1,5 +1,5 @@
-includeLib('jquery-1.7.2.min');
-includeLib('jquery-ui-1.8.20.min');
+include('jquery-1.7.2.min');
+include('jquery-ui-1.8.20.min');
 
 includeCore('springbok.base');
 includeCore('springbok.forms');
