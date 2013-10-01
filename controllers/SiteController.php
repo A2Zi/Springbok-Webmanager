@@ -1,7 +1,7 @@
 <?php
 class SiteController extends AController{
 	/** */
-	function index(){
+	static function index(){
 		$servers=Server::findAll();
 		foreach($servers as &$server){
 			$server->isAlive=CDaemons::isAlive('Ssh',self::$workspace->id.'-'.$server->id);
@@ -18,7 +18,7 @@ class SiteController extends AController{
 	}
 	
 	/** */
-	function favicon(){
+	static function favicon(){
 		self::renderFile(APP.'web/img/favicon.png');
 	}
 }

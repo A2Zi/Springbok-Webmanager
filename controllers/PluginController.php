@@ -7,7 +7,7 @@ class PluginController extends AController{
 	}
 	
 	/** */
-	function index(){
+	static function index(){
 		Plugin::Table()->paginate()->setActionsRUD()->render(_t('Plugins'));
 	}
 	
@@ -36,7 +36,7 @@ class PluginController extends AController{
 	/** @ValidParams
 	 * id > @Required
 	 */
-	function enhance(int $id){
+	static function enhance(int $id){
 		$plugin=Plugin::ById($id)->with('PluginPath');
 		if(empty($plugin)) notFound();
 		$pluginPath=$plugin->path();
@@ -74,7 +74,7 @@ include CORE.'plugin.php';";
 	/**
 	 * plugin > @Valid('name','folder_name','plugin_path_id')
 	 */
-	function add(Plugin $plugin){
+	static function add(Plugin $plugin){
 		if($plugin!==NULL && !CValidation::hasErrors()){
 			$pluginPath=PluginPath::findValuePathById($plugin->plugin_path_id).DS.$plugin->folder_name.DS.'src'.DS;
 			self::_createStructure($pluginPath,$plugin->name);
@@ -90,7 +90,7 @@ include CORE.'plugin.php';";
 	 * id > @Required
 	 * plugin > @Valid('name','folder_name','plugin_path_id')
 	 */
-	function edit(int $id,Plugin $plugin){
+	static function edit(int $id,Plugin $plugin){
 		if($plugin===NULL){
 			$plugin=Plugin::findOneById($id);
 		}elseif(!CValidation::hasErrors()){

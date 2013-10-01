@@ -1,7 +1,7 @@
 <?php
 class WorkspaceController extends AController{
 	/** */
-	function index(){
+	static function index(){
 		$tableworkspaces=Workspace::Table()->paginate()->setActionsRUD()->actionClick('select')->addAction('select');
 		mset($tableworkspaces);
 		render();

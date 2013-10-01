@@ -3,14 +3,14 @@ exit('TODO : edit yaml files');
 Controller::$defaultLayout='project';
 class ProjectLangsController extends AController{
 	/** @Required('id') */
-	function view(int $id){
+	static function view(int $id){
 		$project=Project::ById($id)->with('ProjectLang')->notFoundIfFalse();
 		self::mset($project);
 		self::render();
 	}
 	
 	/** @ValidParams */
-	function add(int $id,ProjectLang $projectLang){
+	static function add(int $id,ProjectLang $projectLang){
 		if($projectLang){
 			$projectLang->project_id=$id;
 			$projectLang->insert();
@@ -122,7 +122,7 @@ class ProjectLangsController extends AController{
 	 * id > @Required
 	 * lang > @Required
 	 */
-	function models(int $id, string $lang){
+	static function models(int $id, string $lang){
 		$project=Project::ById($id)->notFoundIfFalse();
 		$projectPath=self::$workspace->projects_dir.$project->path.DS.'src';
 		mset($project,$lang);
@@ -155,7 +155,7 @@ class ProjectLangsController extends AController{
 	 * id > @Required
 	 * lang > @Required
 	 */
-	function modelsSave(int $id, string $lang, string $modelname,array $data){
+	static function modelsSave(int $id, string $lang, string $modelname,array $data){
 		$project=Project::ById($id)->notFoundIfFalse();
 		$projectPath=self::$workspace->projects_dir.$project->path.'/src';
 		$db=self::_loadDbLang($projectPath, $lang);
@@ -174,7 +174,7 @@ class ProjectLangsController extends AController{
 	
 	
 	/** @ValidParams @Id @NotEmpty('lang') */
-	function plugins(int $id,$lang){
+	static function plugins(int $id,$lang){
 		$project=Project::ById($id)->notFoundIfFalse();
 		mset($project,$lang);
 		$projectPath=self::$workspace->projects_dir.$project->path.DS.'src';
@@ -194,7 +194,7 @@ class ProjectLangsController extends AController{
 	}
 	
 	/** @ValidParams @Id @NotEmpty('lang','pluginName') */
-	function pluginSave(int $id,$lang,$pluginName,array $data){
+	static function pluginSave(int $id,$lang,$pluginName,array $data){
 		$project=Project::ById($id)->notFoundIfFalse();
 		
 		$projectPath=self::$workspace->projects_dir.$project->path.DS.'src';
@@ -217,7 +217,7 @@ class ProjectLangsController extends AController{
 	 * id > @Required
 	 * lang > @Required
 	 */
-	function js(int $id, string $lang){
+	static function js(int $id, string $lang){
 		$project=Project::ById($id)->notFoundIfFalse();
 		$projectPath=self::$workspace->projects_dir.$project->path.'/src/web/js/';
 		self::mset($project,$lang);
@@ -263,7 +263,7 @@ class ProjectLangsController extends AController{
 	 * id > @Required
 	 * lang > @Required
 	 */
-	function js_save(int $id, string $lang, array $data){
+	static function js_save(int $id, string $lang, array $data){
 		$project=Project::ById($id)->notFoundIfFalse();
 		$projectPath=self::$workspace->projects_dir.$project->path.'/src/web/js/';
 		
@@ -286,7 +286,7 @@ class ProjectLangsController extends AController{
 	 * id > @Required
 	 * lang > @Required
 	 */
-	function update_core(int $id, $lang){
+	static function update_core(int $id, $lang){
 		$project=Project::ById($id)->notFoundIfFalse();
 		$projectPath=self::$workspace->projects_dir.$project->path.'/src';
 		$db=self::loadCoreDB($lang);

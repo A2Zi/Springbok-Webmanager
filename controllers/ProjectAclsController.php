@@ -2,7 +2,7 @@
 Controller::$defaultLayout='project';
 class ProjectAclsController extends AController{
 	/** @ValidParams @Required('id') */
-	function view(int $id){
+	static function view(int $id){
 		$project=Project::ById($id);
 		if(empty($project)) notFound();
 		$permissions=file_exists($aclFile=($project->path().'/dev/config/aclPermissions.php'))? include $aclFile  : array();
@@ -32,7 +32,7 @@ class ProjectAclsController extends AController{
 	}
 	
 	/** @ValidParams @AllRequired */
-	function addGroup(int $id,$name){
+	static function addGroup(int $id,$name){
 		$project=Project::ById($id);
 		if(empty($project)) notFound();
 		$groups=file_exists($groupFile=($project->path().'/src/config/aclGroups.php')) ? include $groupFile : array();
@@ -43,7 +43,7 @@ class ProjectAclsController extends AController{
 
 
 	/** @ValidParams @Required('id','name') */
-	function sort(int $id,$name,array $perms){
+	static function sort(int $id,$name,array $perms){
 		$project=Project::ById($id);
 		if(empty($project)) notFound();
 		$groups=file_exists($groupFile=($project->path().'/src/config/aclGroups.php')) ? include $groupFile : array();

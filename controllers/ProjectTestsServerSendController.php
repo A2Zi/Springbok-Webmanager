@@ -6,7 +6,7 @@ class ProjectTestsServerSendController extends SControllerServerSentEvents{
 	}
 	
 	/** @ValidParams @Id @NotEmpty('entry','env')*/
-	function index(int $id,$entry,$env){
+	static function index(int $id,$entry,$env){
 		$project=Project::ById($id);
 		notFoundIfFalse($project);
 		$tests=file_exists($filename=($projectPath=$project->path()).'/tests/'.$entry.'.json') ? json_decode(file_get_contents($filename),true) : array();

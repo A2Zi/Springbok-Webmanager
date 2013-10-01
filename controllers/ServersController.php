@@ -7,14 +7,14 @@ class ServersController extends AController{
 	
 	
 	/** */
-	function index(){
+	static function index(){
 		$tableservers=Server::Table()->paginate()->setActionsRUD();
 		mset($tableservers);
 		render();
 	}
 	
 	/** */
-	function initSsh(){
+	static function initSsh(){
 		$sshDir='/var/www/.ssh/';
 		if(!file_exists($sshDir)) mkdir($sshDir,0700);
 		if(!file_exists($sshDir.'config')) file_put_contents($sshDir.'config','Host *
@@ -26,7 +26,7 @@ class ServersController extends AController{
 	/** @ValidParams
 	 * id > @Required
 	 */
-	function view(int $id,$testSshConnection){
+	static function view(int $id,$testSshConnection){
 		$server=Server::findOneById($id);
 		if(empty($server)) notFound();
 		self::mset($server);
@@ -42,7 +42,7 @@ class ServersController extends AController{
 	/**
 	 * server > @Valid
 	 */
-	function add(Server $server){
+	static function add(Server $server){
 		if($server){
 			if(!empty($server->pwd)) $server->pwd=USecure::encryptAES($server->pwd);
 			$server->insert();
@@ -53,7 +53,7 @@ class ServersController extends AController{
 	/** @ValidParams
 	 * id > @Required
 	 */
-	function edit(int $id,Server $server){
+	static function edit(int $id,Server $server){
 		if($server){
 			if(!empty($_FILES)){
 				$sshDir=DATA.'ssh/'.AController::$workspace->name.'/';
@@ -77,7 +77,7 @@ class ServersController extends AController{
 	/** @ValidParams
 	 * id > @Required
 	 */
-	function deployments(int $id){
+	static function deployments(int $id){
 		$server=Server::QOne()->byId($id)->with('Deployment',array('with'=>array('Project'=>array('fields'=>'name'))));
 		if(empty($server)) notFound();
 		self::mset($server);
@@ -87,7 +87,7 @@ class ServersController extends AController{
 	/** @ValidParams
 	 * id > @Required
 	 */
-	function cores(int $id){
+	static function cores(int $id){
 		$server=Server::QOne()->byId($id)->with('ServerCore',array('with'=>array('Deployment'=>array('isCount'=>true))));
 		if(empty($server)) notFound();
 		self::mset($server);
@@ -98,7 +98,7 @@ class ServersController extends AController{
 	/** @ValidParams
 	 * id > @Required
 	 */
-	function core_delete(int $id){
+	static function core_delete(int $id){
 		$core=ServerCore::QOne()->byId($id)->with('Server');
 		if(empty($core)) notFound();
 		UExec::exec('rm -rf '.$core->server->core_dir.DS.$core->path,$core->server->sshOptions());
@@ -107,7 +107,7 @@ class ServersController extends AController{
 	/** @ValidParams
 	 * id > @Required
 	 */
-	function core_update(int $id){
+	static function core_update(int $id){
 		$server=Server::findOneById($id);
 		throw new Exception;
 		$scPath=$server->deployCore(false,$resp,false,true);

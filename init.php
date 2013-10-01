@@ -15,7 +15,7 @@ $action=array_shift($argv);'."
 include CORE.'cli.php';");
 
 mkdir($webmanagerDir.'config');
-echo shell_exec('cd '.escapeshellarg($webmanagerDir).'src && ln -s ../config && cd .. && ln -s src/db');
+echo shell_exec('cd '.escapeshellarg($webmanagerDir).'src && ln -s ../config');
 
 $env=include $baseDir.'core/env.php';
 
@@ -47,9 +47,9 @@ file_put_contents($webmanagerDir.'config/_'.$env.'.php',"<?php return array(
 file_put_contents($webmanagerDir.'config/routes.php',"<?php return array(
 	'/'=>array('Site::index'),
 	'/phpdoc/:file'=>array('Phpdoc::index'),
-	'/editor/:id/:action/*'=>array('Editor::!'),
+	'/editor/:id/:action/*'=>array('Editor::index'),
 	'/editor/ace/:file'=>array('Editor::ace',array('file'=>'.*')),
-	'/:controller(/:action/*)?'=>array('!::!'),
+	'/:controller(/:action/*)?'=>array('Site::index'),
 );");
 
 file_put_contents($webmanagerDir.'config/routes-langs.php',"<?php return array(

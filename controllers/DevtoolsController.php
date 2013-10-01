@@ -2,24 +2,24 @@
 Controller::$defaultLayout='dev_tools';
 class DevtoolsController extends Controller{
 	/** */
-	function index(){
+	static function index(){
 		self::render();
 	}
 	
 	/** */
-	function colors($hexColor){
+	static function colors($hexColor){
 		if($hexColor===NULL) $hexColor='888888';
 		self::set('colors',UColors::darkerAndLighterShadesWithForeground($hexColor));
 		self::render();
 	}
 	
 	/** */
-	function pt_px(){
+	static function pt_px(){
 		self::render();
 	}
 	
 	/** */
-	function jqueryui(){
+	static function jqueryui(){
 		self::render();
 	}
 	

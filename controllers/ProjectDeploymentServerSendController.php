@@ -6,7 +6,7 @@ class ProjectDeploymentServerSendController extends SControllerServerSentEvents{
 	}
 	
 	/** @ValidParams @Required('id') */
-	function deploy(int $id){
+	static function deploy(int $id){
 		try{
 			$deployment=Deployment::ById($id)->with('Project')->with('Server');
 			notFoundIfFalse($deployment);

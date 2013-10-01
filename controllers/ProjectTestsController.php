@@ -2,7 +2,7 @@
 Controller::$defaultLayout='project';
 class ProjectTestsController extends AController{
 	/** @ValidParams @Id */
-	function index(int $id,$entry,$env){
+	static function index(int $id,$entry,$env){
 		$project=Project::ById($id);
 		notFoundIfFalse($project);
 		if(empty($entry)) $entry='index';
@@ -25,7 +25,7 @@ class ProjectTestsController extends AController{
 	}
 	
 	/** @ValidParams @Id */
-	function save(int $id,$entry,array $tests){
+	static function save(int $id,$entry,array $tests){
 		$project=Project::ById($id);
 		notFoundIfFalse($project);
 		file_put_contents($project->path().'/tests/'.$entry.'.json',str_replace('},',"},\n",json_encode($tests/*, JSON_PRETTY_PRINT*/)));

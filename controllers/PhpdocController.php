@@ -1,7 +1,7 @@
 <?php
 class PhpdocController extends Controller{
 	/** */
-	function index($file,$search){
+	static function index($file,$search){
 		$phpdoc_dir=Config::$php_doc_dir;
 		$search_res=NULL;
 		if($file) $file=$phpdoc_dir.$file.'.html';

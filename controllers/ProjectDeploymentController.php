@@ -2,7 +2,7 @@
 Controller::$defaultLayout='project';
 class ProjectDeploymentController extends AController{
 	/** @ValidParams @AllRequired */
-	function all(int $id){
+	static function all(int $id){
 		$project=Project::ById($id);
 		notFoundIfFalse($project);
 		self::mset($project);
@@ -13,7 +13,7 @@ class ProjectDeploymentController extends AController{
 	/** @Post @ValidParams @AllRequired
 	 * deployment > @Valid('project_id','server_id','path')
 	 */
-	function add(Deployment $deployment){
+	static function add(Deployment $deployment){
 		$deployment->insert();
 		self::redirect('/projectDeployment/all/'.$deployment->project_id);
 	}
@@ -21,7 +21,7 @@ class ProjectDeploymentController extends AController{
 	/** @ValidParams @Required('id')
 	 * deployment > @Valid('path','base_url')
 	 */
-	function edit(int $id,Deployment $deployment){
+	static function edit(int $id,Deployment $deployment){
 		$existingDeployment=Deployment::ById($id)->with('Project');
 		notFoundIfFalse($existingDeployment);
 		if($deployment!==null){
@@ -34,7 +34,7 @@ class ProjectDeploymentController extends AController{
 	}
 	
 	/** @ValidParams @Required('id') */
-	function del(int $id){
+	static function del(int $id){
 		$prjId=Deployment::findValueProject_idById($id);
 		notFoundIfFalse($prjId);
 		Deployment::deleteOneById($id);
@@ -43,7 +43,7 @@ class ProjectDeploymentController extends AController{
 	
 	
 	/** @ValidParams @Required('id') */
-	function view(int $id){
+	static function view(int $id){
 		$deployment=Deployment::ById($id)->with('Project')->with('Server');
 		notFoundIfFalse($deployment);
 		mset($deployment);
@@ -54,14 +54,14 @@ class ProjectDeploymentController extends AController{
 	
 	
 	/** @ValidParams @Post @Required('id') */
-	function start(int $id){
+	static function start(int $id){
 		$deployment=Deployment::ById($id)->with('Project')->with('Server');
 		notFoundIfFalse($deployment);
 		CSession::setFlash($deployment->start(null,self::$workspace->id));
 		redirect('/projectDeployment/view/'.$id);
 	}
 	/** @ValidParams @Required('id') */
-	function stop(int $id){
+	static function stop(int $id){
 		$deployment=Deployment::ById($id)->with('Project')->with('Server');
 		notFoundIfFalse($deployment);
 		debugVar($deployment->stop(null,self::$workspace->id));
@@ -71,7 +71,7 @@ class ProjectDeploymentController extends AController{
 	
 	
 	/** @ValidParams @Required('id') */
-	function deploy(int $id){
+	static function deploy(int $id){
 		$deployment=Deployment::ById($id)->with('Project')->with('Server');
 		notFoundIfFalse($deployment);
 		mset($deployment);

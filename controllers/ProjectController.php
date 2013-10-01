@@ -3,7 +3,7 @@ Controller::$defaultLayout='project';
 class ProjectController extends AController{
 	
 	/** */
-	function index(){
+	static function index(){
 		Project::Table()->paginate()->setActionsRUD()->render(_t('Projects'));
 	}
 	
@@ -110,7 +110,7 @@ include CORE.'cli.php';";
 	
 	const CRUD_MODEL='Project';
 	/** @ValidParams @Required('id') */
-	function edit(int $id){
+	static function edit(int $id){
 		CRUD::edit(self::CRUD_MODEL,$id,null,null,'project');
 	}
 	
@@ -140,7 +140,7 @@ include CORE.'cli.php';";
 			file_put_contents($dir.'_'.ENV.'.php',"<?"."php return array(\n\t'siteUrl'=>array('index'=>'http://localhost/'),"
 					."\n\t'db'=>array(\n\t\t'default'=>array(\n\t\t\t\n\t\t\t'user'=>'root','password'=>'root'\n\t\t),\n\t),'generate'=>array('default'=>true)\n\t\n);");
 			file_put_contents($dir.'routes.php',"<?"."php return array(\n\t'/favicon'=>array('Site::favicon','ext'=>'[a-z]+'),\n\t'/'=>array('Site::index'),"
-				."\n\t'/:controller(/:action/*)?'=>array('!::!'),\n);");
+				."\n\t'/:controller(/:action/*)?'=>array('Site::index'),\n);");
 			file_put_contents($dir.'routes-langs.php',"<?"."php return NULL;");
 			file_put_contents($dir.'cookies.php',"<?"."php return array();");
 			file_put_contents($dir.'secure.php',"<?"."php return array(\n\t'url_login'=>'/site/login', 'url_redirect'=>'/',\n\t\n);");
@@ -199,7 +199,7 @@ include CORE.'cli.php';";
 	/** @ValidParams
 	 * id > @Required
 	 */
-	function jobs(int $id){
+	static function jobs(int $id){
 		$project=Project::ById($id)->notFoundIfFalse();
 		mset($project);
 		set('jobs',file_exists($filename=$project->path().DS.'dev/config/jobs.php') ? include $filename : false);
@@ -210,7 +210,7 @@ include CORE.'cli.php';";
 	 * id > @Required
 	 * name > @Required
 	 */
-	function job_execute(int $id,$name){
+	static function job_execute(int $id,$name){
 		$project=Project::ById($id)->notFoundIfFalse();
 		$jobs=include $project->path().DS.'dev/config/jobs.php';
 		if(!isset($jobs[$name])) notFound();

@@ -3,7 +3,7 @@ class EditorController extends AController{
 	/** @ValidParams
 	 * id > @Required
 	 */
-	function project(int $id){
+	static function project(int $id){
 		$project=Project::findOneById($id);
 		if(empty($project)) notFound();
 		self::mset($project);
@@ -14,7 +14,7 @@ class EditorController extends AController{
 	/** @ValidParams
 	 * id > @Required
 	 */
-	function plugin(int $id){
+	static function plugin(int $id){
 		$plugin=Plugin::findOneById($id);
 		if(empty($plugin)) notFound();
 		self::set_('project',$plugin);
@@ -23,7 +23,7 @@ class EditorController extends AController{
 	}
 	
 	/** */
-	function ace($file){
+	static function ace($file){
 		self::renderFile(APP.'web/js/ace/'.$file);
 	}
 	
@@ -41,14 +41,14 @@ class EditorController extends AController{
 	/** @Ajax
 	 * id > @Required
 	 */
-	function projectFileTree(int $id,$dir){
+	static function projectFileTree(int $id,$dir){
 		if(empty($dir)) $dir=DS;
 		self::_fileTree(self::_projectRoot($id),$dir);
 	}
 	/** @Ajax
 	 * id > @Required
 	 */
-	function pluginFileTree(int $id,$dir){
+	static function pluginFileTree(int $id,$dir){
 		if(empty($dir)) $dir=DS;
 		self::_fileTree(self::_pluginRoot($id),$dir);
 	}
@@ -77,7 +77,7 @@ class EditorController extends AController{
 	 * id > @Required
 	 * dir > @Required
 	 */
-	function projectFileContent(int $id,$file){
+	static function projectFileContent(int $id,$file){
 		$filename=self::_projectRoot($id).$file;
 		if(!file_exists($filename)) notFound();
 		self::renderText(file_get_contents($filename));
@@ -88,7 +88,7 @@ class EditorController extends AController{
 	 * id > @Required
 	 * dir > @Required
 	 */
-	function pluginFileContent(int $id,$file){
+	static function pluginFileContent(int $id,$file){
 		$filename=self::_pluginRoot($id).$file;
 		if(!file_exists($filename)) notFound();
 		self::renderText(file_get_contents($filename));
@@ -99,7 +99,7 @@ class EditorController extends AController{
 	 * dir > @Required
 	 * content > @Required
 	 */
-	function projectSaveFileContent(int $id,$file,$content){
+	static function projectSaveFileContent(int $id,$file,$content){
 		$filename=self::_projectRoot($id).$file;
 		if(!file_exists($filename)) notFound();
 		file_put_contents($filename,$content);
@@ -110,7 +110,7 @@ class EditorController extends AController{
 	 * dir > @Required
 	 * content > @Required
 	 */
-	function pluginSaveFileContent(int $id,$file,$content){
+	static function pluginSaveFileContent(int $id,$file,$content){
 		$filename=self::_pluginRoot($id).$file;
 		if(!file_exists($filename)) notFound();
 		file_put_contents($filename,$content);

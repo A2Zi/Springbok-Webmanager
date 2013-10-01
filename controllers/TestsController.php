@@ -2,21 +2,21 @@
 Controller::$defaultLayout='dev_tools';
 class TestsController extends Controller{
 	/** */
-	function index(){
+	static function index(){
 		$tests=array_diff(get_class_methods(__CLASS__),array('index','test','push'),get_class_methods('Controller'));
 		mset($tests);
 		render();
 	}
 	
 	/** */
-	function test($name){
+	static function test($name){
 		mset($name);
 		set('res',call_user_func(array('self',$name)));
 		render();
 	}
 	
 	/** */
-	function jsToString(){
+	static function jsToString(){
 		echo HHtml::doctype();
 		echo '<html><body>';
 		echo HHtml::jsInline('var test={ toString:function(){ return "toString works !"; } }; alert(test);');
@@ -24,14 +24,14 @@ class TestsController extends Controller{
 	}
 	
 	/** */
-	function rand(){
+	static function rand(){
 		/*$array=array('a','b');
 		debugVar(array_rand($array,2));*/
 		debugVar(UGenerator::randomCode(12));
 	}
 	
 	/** */
-	function httpClient(){
+	static function httpClient(){
 		/*$array=array('a','b');
 		debugVar(array_rand($array,2));*/
 		$httpClient=new CHttpClient();
@@ -40,7 +40,7 @@ class TestsController extends Controller{
 	}
 	
 	/** */
-	function testpush(){
+	static function testpush(){
 		/*self::allowFlush();
 		$i=10;
 		while($i-->0){
@@ -49,14 +49,14 @@ class TestsController extends Controller{
 		}*/
 	}
 	/** */
-	function testmysqllongquery(){
+	static function testmysqllongquery(){
 		$db=EMCategory::$__modelDb;
 		set_time_limit(2); // 2 secondes max pour exécuter la requete
 		$db->doUpdate('SELECT SLEEP(90)');
 	}
 	
 	/** */
-	function UFileApi(){
+	static function UFileApi(){
 		echo $test;
 		unlink('/var/unexistant_file');
 		UFile::rm('/var/unexistant_file');

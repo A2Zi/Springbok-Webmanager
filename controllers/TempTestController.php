@@ -1,7 +1,7 @@
 <?php
 class TempTestController extends AController{
 	/** */
-	function index(){
+	static function index(){
 		require CLIBS.'PHP-Parser/bootstrap.php';
 		ini_set('xdebug.max_nesting_level', 2000);
 		//$code=file_get_contents(__FILE__);
