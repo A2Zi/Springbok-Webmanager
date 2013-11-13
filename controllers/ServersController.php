@@ -39,6 +39,16 @@ class ServersController extends AController{
 		self::render();
 	}
 	
+	/** @ValidParams
+	 * id > @Required
+	 */
+	static function delete(int $id){
+		$server=Server::findOneById($id);
+		notFoundIfFalse($server);
+		$server->delete();
+		self::redirect('/servers');
+	}
+	
 	/**
 	 * server > @Valid
 	 */
