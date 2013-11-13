@@ -2,7 +2,7 @@
 <header>
 	<div id="logo">Springbok <b>WebManager</b><br />{if CSession::exists('workspace') && ($w=CSession::get('workspace')) && !empty($w->name)}<?= $w->name ?>{/if}</div>
 	<? HMenu::ajaxTop(array(
-		_tC('Home')=>false,
+		_tC('Home')=>'/',
 		_t('Workspaces')=>'/workspace',
 		_t('Projects')=>'/project',
 		_t('Servers')=>'/servers',
