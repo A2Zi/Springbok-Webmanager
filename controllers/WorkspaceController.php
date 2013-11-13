@@ -18,6 +18,15 @@ class WorkspaceController extends AController{
 	
 	/** @ValidParams
 	* id > @Required
+	*/ function delete(int $id){
+		$workspace=Workspace::findOneById($id);
+		notFoundIfFalse($workspace);
+		$workspace->delete();
+		self::redirect('/workspace');
+	}
+	
+	/** @ValidParams
+	* id > @Required
 	*/	function select(int $id){
 		$workspace=Workspace::findOneById($id);
 		if(empty($workspace)) notFound();
