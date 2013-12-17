@@ -318,6 +318,7 @@ include CORE.'cli.php';");
 		
 		/* SLAVES - REPLICATION */
 		if($deploymentConfig && $shemaProcessSuccess){
+			// START COMMENT HERE FOR MOVING Allo FAILOVER to SV3
 			if(!empty($deploymentConfig['slaves'])){
 				//rsync how to check it's done ?
 				$resp->push('Sleeping for 2 minutes...');
@@ -350,6 +351,7 @@ include CORE.'cli.php';");
 				$resp->push('Failovers updated');
 				//no need to wait
 			}
+			// STOP COMMENT HERE FOR MOVING Allo FAILOVER to SV3
 		}
 		
 		$this->stopDaemon($workspaceId);
