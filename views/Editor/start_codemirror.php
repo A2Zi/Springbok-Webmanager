@@ -3,7 +3,7 @@
 	<head>
 		<? HHtml::metaCharset() ?>
 		<title>Editor</title>
-		<?php HHtml::cssLink(); HHTml::jsLink(); HHtml::jsI18n(); HHtml::jsLink('/editor_codemirror'); ?>
+		<?php HHtml::cssLink(); HHtml::jsLink(); HHtml::jsI18n(); HHtml::jsLink('/editor_codemirror'); ?>
 	</head>
 	<body>
 		<div id="container">

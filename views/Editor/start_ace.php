@@ -3,7 +3,7 @@
 	<head>
 		<? HHtml::metaCharset() ?>
 		<title>Editor</title>
-		<?php HHtml::cssLink(); HHTml::jsLink(); HHtml::jsI18n(); HHtml::jsLink('/editor_ace'); HHtml::jsLink('../ace/ace'); HHtml::jsLink('../ace/theme-dawn') ?>
+		<?php HHtml::cssLink(); HHtml::jsLink(); HHtml::jsI18n(); HHtml::jsLink('/editor_ace'); HHtml::jsLink('../ace/ace'); HHtml::jsLink('../ace/theme-dawn') ?>
 	</head>
 	<body>
 		<div id="container">
