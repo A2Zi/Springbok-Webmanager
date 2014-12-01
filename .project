@@ -7,7 +7,7 @@
 	</projects>
 	<buildSpec>
 		<buildCommand>
-			<name>com.aptana.editor.php.aptanaPhpBuilder</name>
+			<name>com.springbokframework.builder</name>
 			<arguments>
 			</arguments>
 		</buildCommand>
@@ -16,8 +16,15 @@
 			<arguments>
 			</arguments>
 		</buildCommand>
+		<buildCommand>
+			<name>com.aptana.editor.php.aptanaPhpBuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
 	</buildSpec>
 	<natures>
+		<nature>com.springbokframework.nature</nature>
 		<nature>com.aptana.editor.php.phpNature</nature>
+		<nature>com.aptana.projects.webnature</nature>
 	</natures>
 </projectDescription>

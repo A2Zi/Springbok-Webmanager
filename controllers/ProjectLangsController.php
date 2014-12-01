@@ -4,7 +4,7 @@ Controller::$defaultLayout='project';
 class ProjectLangsController extends AController{
 	/** @Required('id') */
 	static function view(int $id){
-		$project=Project::ById($id)->with('ProjectLang')->notFoundIfFalse();
+		$project=Project::ById($id)->with('ProjectLang')->mustFetch();
 		self::mset($project);
 		self::render();
 	}
@@ -22,7 +22,7 @@ class ProjectLangsController extends AController{
 	* id > @Required
 	* lang > @Required
 	*/ function lang(int $id, string $lang){
-		$project=Project::ById($id)->notFoundIfFalse();
+		$project=Project::ById($id)->mustFetch();
 		$projectPath=self::$workspace->projects_dir.$project->path.DS.'src';
 		self::mset($project,$lang);
 		
@@ -60,7 +60,7 @@ class ProjectLangsController extends AController{
 	* id > @Required
 	* lang > @Required
 	*/ function save(int $id, string $lang, array $data){
-		$project=Project::ById($id)->notFoundIfFalse();
+		$project=Project::ById($id)->mustFetch();
 		$projectPath=self::$workspace->projects_dir.$project->path.DS.'src';
 		$db=self::_loadDbLang($projectPath, $lang);
 		$db->doUpdate('DELETE FROM t WHERE c=\'a\' AND s NOT LIKE "plugin%"');
@@ -78,7 +78,7 @@ class ProjectLangsController extends AController{
 	* id > @Required
 	* lang > @Required
 	*/ function sp(int $id, string $lang){
-		$project=Project::ById($id)->notFoundIfFalse();
+		$project=Project::ById($id)->mustFetch();
 		$projectPath=self::$workspace->projects_dir.$project->path.DS.'src';
 		self::mset($project,$lang);
 		
@@ -99,7 +99,7 @@ class ProjectLangsController extends AController{
 	* id > @Required
 	* lang > @Required
 	*/ function sp_save(int $id, string $lang, array $data){
-		$project=Project::ById($id)->notFoundIfFalse();
+		$project=Project::ById($id)->mustFetch();
 		$projectPath=self::$workspace->projects_dir.$project->path.DS.'src';
 		$db=self::_loadDbLang($projectPath, $lang);
 		$db->doUpdate('DELETE FROM t WHERE c IN(\'s\',\'p\')');
@@ -123,7 +123,7 @@ class ProjectLangsController extends AController{
 	 * lang > @Required
 	 */
 	static function models(int $id, string $lang){
-		$project=Project::ById($id)->notFoundIfFalse();
+		$project=Project::ById($id)->mustFetch();
 		$projectPath=self::$workspace->projects_dir.$project->path.DS.'src';
 		mset($project,$lang);
 		
@@ -156,7 +156,7 @@ class ProjectLangsController extends AController{
 	 * lang > @Required
 	 */
 	static function modelsSave(int $id, string $lang, string $modelname,array $data){
-		$project=Project::ById($id)->notFoundIfFalse();
+		$project=Project::ById($id)->mustFetch();
 		$projectPath=self::$workspace->projects_dir.$project->path.'/src';
 		$db=self::_loadDbLang($projectPath, $lang);
 		$db->doUpdate('DELETE FROM t WHERE c=\'f\' AND s like '.$db->escape($modelname.'%'));
@@ -175,7 +175,7 @@ class ProjectLangsController extends AController{
 	
 	/** @ValidParams @Id @NotEmpty('lang') */
 	static function plugins(int $id,$lang){
-		$project=Project::ById($id)->notFoundIfFalse();
+		$project=Project::ById($id)->mustFetch();
 		mset($project,$lang);
 		$projectPath=self::$workspace->projects_dir.$project->path.DS.'src';
 		
@@ -195,7 +195,7 @@ class ProjectLangsController extends AController{
 	
 	/** @ValidParams @Id @NotEmpty('lang','pluginName') */
 	static function pluginSave(int $id,$lang,$pluginName,array $data){
-		$project=Project::ById($id)->notFoundIfFalse();
+		$project=Project::ById($id)->mustFetch();
 		
 		$projectPath=self::$workspace->projects_dir.$project->path.DS.'src';
 		$db=self::_loadDbLang($projectPath, $lang);
@@ -218,7 +218,7 @@ class ProjectLangsController extends AController{
 	 * lang > @Required
 	 */
 	static function js(int $id, string $lang){
-		$project=Project::ById($id)->notFoundIfFalse();
+		$project=Project::ById($id)->mustFetch();
 		$projectPath=self::$workspace->projects_dir.$project->path.'/src/web/js/';
 		self::mset($project,$lang);
 		
@@ -264,7 +264,7 @@ class ProjectLangsController extends AController{
 	 * lang > @Required
 	 */
 	static function js_save(int $id, string $lang, array $data){
-		$project=Project::ById($id)->notFoundIfFalse();
+		$project=Project::ById($id)->mustFetch();
 		$projectPath=self::$workspace->projects_dir.$project->path.'/src/web/js/';
 		
 		$content='';
@@ -287,7 +287,7 @@ class ProjectLangsController extends AController{
 	 * lang > @Required
 	 */
 	static function update_core(int $id, $lang){
-		$project=Project::ById($id)->notFoundIfFalse();
+		$project=Project::ById($id)->mustFetch();
 		$projectPath=self::$workspace->projects_dir.$project->path.'/src';
 		$db=self::loadCoreDB($lang);
 		$data=$db->doSelectListValue('SELECT s,t FROM t WHERE t != ""');
