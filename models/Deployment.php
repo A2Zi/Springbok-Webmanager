@@ -314,7 +314,10 @@ include CORE.'cli.php';");
 			/* Delete old cores */
 			$this->server->removeOldCores($resp);
 		
-		}else $this->server->removeBlockFile();
+		}else {
+			$resp->push('remove block (from doDeployment)');
+			$this->server->removeBlockFile();
+		}
 		
 		/* SLAVES - REPLICATION */
 		if($deploymentConfig && $shemaProcessSuccess){

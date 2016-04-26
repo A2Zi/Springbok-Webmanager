@@ -60,11 +60,12 @@ class Server extends SSqlModel{
 	}
 	
 	public function deployCore($deployment,$resp,$simulation=false,$force=false){
+		$resp->push("deployCore ".print_r(func_get_args(),true));
 		$sshOptions=$this->sshOptions();
 		
 		$blockFile=UExec::exec('cat '.escapeshellarg($this->core_dir.'/block'),$sshOptions);
 		if(!(endsWith($blockFile,'No such file or directory') || endsWith($blockFile,'Aucun fichier ou dossier de ce type'))){
-			$resp->push("DEPLOY CORE:\n".'A deployment is already in progress by '.$blockFile);
+			$resp->push("DEPLOY CORE:\n".'Fuck ! A deployment is already in progress by '.$blockFile);
 			return false;
 		}
 		UExec::exec('echo '.escapeshellarg($this->user).' > '.escapeshellarg($this->core_dir.'/block'),$sshOptions);
@@ -168,6 +169,7 @@ class Server extends SSqlModel{
 		}
 
 		$this->saveVersions($versions);
+		$resp->push('remove block (from removeOldCores)');
 		$this->removeBlockFile($sshOptions);
 	}
 	
