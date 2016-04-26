@@ -206,12 +206,9 @@ include CORE.'cli.php';");
 		
 		
 		/* Prepare content */
-		
 		$lastWebFolder=UExec::exec('cd / && cat '.escapeshellarg($target.'lastWebFolder'),$sshOptions);
-		
 		$webFolder=shortAlphaNumber_enc(floor((time()/60-strtotime(date('Y').'-01-01')/60)/3)); //nombres de (3) minutes depuis le début de l'année (2 minutes : on est à 4 lettres à la fin de l'année ; 3 on reste à 3)
 		if(in_array($webFolder,array('css','js','img','ie'))) $webFolder.='_';
-		
 		$jsFilenames=array('global.js','jsapp.js','index.js');
 		foreach($entries as $entry){
 			$jsFilenames[]=$entry.'.js';

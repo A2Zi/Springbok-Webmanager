@@ -60,7 +60,6 @@ class Server extends SSqlModel{
 	}
 	
 	public function deployCore($deployment,$resp,$simulation=false,$force=false){
-		$resp->push("deployCore ".print_r(func_get_args(),true));
 		$sshOptions=$this->sshOptions();
 		
 		$blockFile=UExec::exec('cat '.escapeshellarg($this->core_dir.'/block'),$sshOptions);
